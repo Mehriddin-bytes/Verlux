@@ -56,8 +56,8 @@ export default function Footer() {
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-teal-600 mt-0.5 flex-shrink-0" />
-                <a href="tel:+1234567890" className="text-gray-700 hover:text-teal-600 transition-colors">
-                  +1 (234) 567-890
+                <a href="tel:+14374520850" className="text-gray-700 hover:text-teal-600 transition-colors">
+                  +1 (437) 452-0850
                 </a>
               </div>
               <div className="flex items-start gap-3">
@@ -68,7 +68,7 @@ export default function Footer() {
               </div>
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-teal-600 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-600">123 Construction Ave, Building City, BC 12345</span>
+                <span className="text-gray-600">8 McKee Ave, North York, ON M2N 7E5</span>
               </div>
             </div>
           </div>
