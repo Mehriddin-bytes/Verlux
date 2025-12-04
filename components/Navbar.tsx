@@ -10,7 +10,7 @@ import { services } from "@/lib/data/homeData";
 
 const navLinks = [
   { href: "/#projects", label: "Projects" },
-  { href: "/#about", label: "About Us" },
+  { href: "/about", label: "About Us" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/#contact", label: "Contact Us" },
 ];
@@ -65,11 +65,10 @@ export default function Navbar() {
             {/* Home Link */}
             <Link
               href="/"
-              className={`relative text-sm font-bold uppercase tracking-wider transition-colors ${
-                pathname === "/"
+              className={`relative text-sm font-bold uppercase tracking-wider transition-colors ${pathname === "/"
                   ? "text-teal-600"
                   : "text-gray-700 hover:text-teal-600"
-              }`}
+                }`}
             >
               Home
               {pathname === "/" && (
@@ -84,11 +83,10 @@ export default function Navbar() {
               onMouseLeave={handleServicesMouseLeave}
             >
               <button
-                className={`relative text-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-1 ${
-                  pathname === "/services" || servicesDropdownOpen
+                className={`relative text-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-1 ${pathname === "/services" || servicesDropdownOpen
                     ? "text-teal-600"
                     : "text-gray-700 hover:text-teal-600"
-                }`}
+                  }`}
               >
                 Services
                 <ChevronDown className={`w-4 h-4 transition-transform ${servicesDropdownOpen ? "rotate-180" : ""}`} />
@@ -96,10 +94,10 @@ export default function Navbar() {
                   <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-teal-600 to-cyan-500 rounded-full"></span>
                 )}
               </button>
-              
+
               {/* Dropdown Menu */}
               {servicesDropdownOpen && (
-                <div 
+                <div
                   className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
                   onMouseEnter={handleServicesMouseEnter}
                   onMouseLeave={handleServicesMouseLeave}
@@ -125,11 +123,10 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative text-sm font-bold uppercase tracking-wider transition-colors ${
-                    isActive
+                  className={`relative text-sm font-bold uppercase tracking-wider transition-colors ${isActive
                       ? "text-teal-600"
                       : "text-gray-700 hover:text-teal-600"
-                  }`}
+                    }`}
                 >
                   {link.label}
                   {isActive && (
@@ -170,9 +167,8 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-white border-t border-gray-200">
           <div className="flex flex-col gap-4">
@@ -180,11 +176,10 @@ export default function Navbar() {
             <Link
               href="/"
               onClick={() => setIsOpen(false)}
-              className={`text-base font-bold uppercase tracking-wider py-2 transition-colors ${
-                pathname === "/"
+              className={`text-base font-bold uppercase tracking-wider py-2 transition-colors ${pathname === "/"
                   ? "text-teal-600 border-l-4 border-teal-500 pl-4"
                   : "text-gray-700 hover:text-teal-600 hover:pl-4 transition-all"
-              }`}
+                }`}
             >
               Home
             </Link>
@@ -193,11 +188,10 @@ export default function Navbar() {
             <div>
               <button
                 onClick={() => setServicesMobileOpen(!servicesMobileOpen)}
-                className={`w-full text-left text-base font-bold uppercase tracking-wider py-2 transition-colors flex items-center justify-between ${
-                  pathname === "/services"
+                className={`w-full text-left text-base font-bold uppercase tracking-wider py-2 transition-colors flex items-center justify-between ${pathname === "/services"
                     ? "text-teal-600 border-l-4 border-teal-500 pl-4"
                     : "text-gray-700 hover:text-teal-600 pl-4"
-                }`}
+                  }`}
               >
                 Services
                 <ChevronDown className={`w-4 h-4 transition-transform ${servicesMobileOpen ? "rotate-180" : ""}`} />
@@ -230,11 +224,10 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`text-base font-bold uppercase tracking-wider py-2 transition-colors ${
-                    isActive
+                  className={`text-base font-bold uppercase tracking-wider py-2 transition-colors ${isActive
                       ? "text-teal-600 border-l-4 border-teal-500 pl-4"
                       : "text-gray-700 hover:text-teal-600 hover:pl-4 transition-all"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </Link>

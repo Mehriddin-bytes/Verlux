@@ -8,15 +8,27 @@ import {
   Play,
 } from "lucide-react";
 
+interface YouTubePlayer {
+  getCurrentTime: () => number;
+  seekTo: (seconds: number, allowSeekAhead: boolean) => void;
+  playVideo: () => void;
+}
+
+interface YouTubeEvent {
+  data: number;
+  target: YouTubePlayer;
+}
+
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     YT: any;
     onYouTubeIframeAPIReady: () => void;
   }
 }
 
 export default function HeroSection() {
-  const playerRef = useRef<any>(null);
+  const playerRef = useRef<YouTubePlayer | null>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -31,7 +43,7 @@ export default function HeroSection() {
         if (iframeRef.current) {
           playerRef.current = new window.YT.Player(iframeRef.current, {
             events: {
-              onStateChange: (event: any) => {
+              onStateChange: (event: YouTubeEvent) => {
                 if (event.data === window.YT.PlayerState.PLAYING) {
                   checkVideoTime();
                 }
@@ -49,7 +61,7 @@ export default function HeroSection() {
       if (iframeRef.current && !playerRef.current) {
         playerRef.current = new window.YT.Player(iframeRef.current, {
           events: {
-            onStateChange: (event: any) => {
+            onStateChange: (event: YouTubeEvent) => {
               if (event.data === window.YT.PlayerState.PLAYING) {
                 checkVideoTime();
               }
@@ -66,7 +78,7 @@ export default function HeroSection() {
 
     const checkVideoTime = () => {
       if (intervalId) clearInterval(intervalId);
-      
+
       intervalId = setInterval(() => {
         if (playerRef.current) {
           try {
@@ -103,7 +115,7 @@ export default function HeroSection() {
           allowFullScreen
           frameBorder="0"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          style={{ 
+          style={{
             border: 'none',
             width: '100vw',
             height: '56.25vw',
@@ -126,7 +138,7 @@ export default function HeroSection() {
             <Sparkles className="w-5 h-5" />
             <span className="text-sm font-bold tracking-wider uppercase">Award-Winning Excellence</span>
           </div>
-          
+
           {/* Main Heading */}
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 leading-tight text-white">
             Building Your Dreams,
@@ -135,24 +147,24 @@ export default function HeroSection() {
               One Brick at a Time
             </span>
           </h1>
-          
+
           {/* Subheading */}
           <p className="text-xl sm:text-2xl text-gray-100 mb-12 leading-relaxed font-medium">
             Transform your vision into reality with precision, passion, and unparalleled expertise in construction.
           </p>
-          
+
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="group text-base sm:text-lg px-6 sm:px-8 lg:px-10 py-5 sm:py-6 lg:py-7 bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-700 hover:to-cyan-600 text-white border-0 rounded-full font-bold shadow-2xl hover:shadow-teal-500/50 hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             >
               Start Your Project
               <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
+            <Button
+              size="lg"
+              variant="outline"
               className="text-base sm:text-lg px-6 sm:px-8 lg:px-10 py-5 sm:py-6 lg:py-7 border-2 border-white text-white bg-transparent hover:bg-white hover:text-gray-900 rounded-full font-bold hover:scale-105 transition-all duration-300 shadow-lg w-full sm:w-auto"
             >
               <Play className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />

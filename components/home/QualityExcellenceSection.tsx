@@ -46,7 +46,7 @@ export default function QualityExcellenceSection() {
             </span>
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed">
-            We don't just build structures—we create lasting legacies. Every project reflects our commitment to excellence and your vision.
+            We don&apos;t just build structures—we create lasting legacies. Every project reflects our commitment to excellence and your vision.
           </p>
         </div>
 
@@ -101,7 +101,7 @@ export default function QualityExcellenceSection() {
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
               We stand behind our work with comprehensive guarantees and warranties that protect your investment for years to come.
             </p>
-            
+
             <div className="space-y-4 mb-8">
               {guarantees.map((guarantee, index) => (
                 <div
@@ -118,8 +118,8 @@ export default function QualityExcellenceSection() {
               ))}
             </div>
 
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="group text-lg px-8 py-6 bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-700 hover:to-cyan-600 text-white border-0 rounded-full font-bold shadow-2xl hover:shadow-teal-500/50 hover:scale-105 transition-all duration-300"
             >
               Learn More About Our Quality
