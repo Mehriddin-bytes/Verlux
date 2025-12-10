@@ -15,9 +15,8 @@ export default function LoadingWithDelay({ minimumDelay = 800 }: LoadingWithDela
 
     // Preload critical images and videos
     const preloadAssets = async () => {
-      const assets: string[] = [
-        "/assests/overview.mp4", // Hero video
-      ];
+      // Video is now hosted on Cloudinary, no need to preload locally
+      const assets: string[] = [];
 
       const preloadPromises = assets.map((src) => {
         return new Promise<void>((resolve) => {

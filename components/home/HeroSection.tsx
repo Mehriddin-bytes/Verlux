@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,18 +9,13 @@ import {
 } from "lucide-react";
 
 export default function HeroSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-20 pb-20">
       {/* Video Background */}
       <div className="absolute inset-0 z-0 w-full h-full overflow-hidden bg-gray-900">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
+        <iframe
+          src="https://player.cloudinary.com/embed/?cloud_name=abdulgafar4&public_id=overview_igxyad&profile=cld-default&autoplay=true&loop=true&muted=true"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto object-cover"
           style={{
             width: '100vw',
@@ -29,11 +23,11 @@ export default function HeroSection() {
             minHeight: '100vh',
             minWidth: '177.77777778vh',
             zIndex: 0,
+            border: 'none',
           }}
-        >
-          <source src="/assests/overview.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+        />
         {/* Fallback gradient if video doesn't load */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 pointer-events-none" style={{ zIndex: -1 }}></div>
         {/* Dark overlay for better text readability */}

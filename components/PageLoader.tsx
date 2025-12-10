@@ -16,26 +16,7 @@ export default function PageLoader({ children, minimumDelay = 300 }: PageLoaderP
 
     // Preload critical assets
     const preloadAssets = async () => {
-      // Preload video (only for home page)
-      const videoSrc = "/assests/overview.mp4";
-      const videoPromise = new Promise<void>((resolve) => {
-        const video = document.createElement("video");
-        video.preload = "auto";
-        video.src = videoSrc;
-        video.oncanplaythrough = () => resolve();
-        video.onerror = () => resolve(); // Don't block on error
-        video.onloadeddata = () => resolve();
-        video.load();
-        
-        // Timeout after 1 second (reduced from 2)
-        setTimeout(() => resolve(), 1000);
-      });
-
-      // Wait for video to load or timeout (non-blocking)
-      Promise.race([
-        videoPromise,
-        new Promise((resolve) => setTimeout(resolve, 500)), // Max 500ms wait
-      ]);
+      // Video is now hosted on Cloudinary, no need to preload locally
 
       // Ensure minimum delay
       const elapsed = Date.now() - startTime;

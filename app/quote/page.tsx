@@ -297,7 +297,7 @@ function QuoteContent() {
           <div className="grid lg:grid-cols-10 gap-6">
             {/* Contact Info Sidebar - Compact */}
             <aside className="lg:col-span-3 order-2 lg:order-1">
-              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 sticky top-20 space-y-4">
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 lg:sticky lg:top-20 space-y-4">
                 <h2 className="text-xl font-black text-gray-900 mb-2">Contact Us</h2>
                 <div className="space-y-3">
                   <a

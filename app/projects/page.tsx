@@ -82,7 +82,7 @@ function ProjectsContent() {
 
           {/* Projects Grid */}
           {filteredProjects.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {filteredProjects.map((project) => (
                 <div
                   key={project.id}
@@ -204,15 +204,15 @@ function ProjectsContent() {
           )}
 
           {/* CTA Section */}
-          <div className="mt-20 text-center">
-            <div className="bg-gradient-to-br from-teal-600 to-cyan-500 rounded-3xl p-12 text-white">
-              <h2 className="text-4xl font-black mb-4">Ready to Start Your Project?</h2>
-              <p className="text-xl text-teal-50/90 mb-8 max-w-2xl mx-auto">
+          <div className="mt-12 md:mt-20 text-center">
+            <div className="bg-gradient-to-br from-teal-600 to-cyan-500 rounded-3xl p-6 sm:p-8 lg:p-12 text-white">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black mb-4">Ready to Start Your Project?</h2>
+              <p className="text-base sm:text-lg lg:text-xl text-teal-50/90 mb-6 sm:mb-8 max-w-2xl mx-auto">
                 Let&apos;s bring your vision to life. Get a free quote today and join our portfolio of satisfied clients.
               </p>
               <Button
                 size="lg"
-                className="bg-white text-teal-600 hover:bg-gray-100 rounded-full px-8 py-6 text-lg font-black shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                className="bg-white text-teal-600 hover:bg-gray-100 rounded-full px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-black shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                 asChild
               >
                 <a href="/quote">
