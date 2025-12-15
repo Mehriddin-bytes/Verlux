@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { Construction } from "lucide-react";
-import { services } from "@/lib/data/homeData";
+import { allServices } from "@/lib/data/services";
 
 const navLinks = [
   { href: "/projects", label: "Projects" },
@@ -64,8 +64,8 @@ export default function Navbar() {
             <Link
               href="/"
               className={`relative text-sm font-bold uppercase tracking-wider transition-colors ${pathname === "/"
-                  ? "text-teal-600"
-                  : "text-gray-700 hover:text-teal-600"
+                ? "text-teal-600"
+                : "text-gray-700 hover:text-teal-600"
                 }`}
             >
               Home
@@ -81,14 +81,14 @@ export default function Navbar() {
               onMouseLeave={handleServicesMouseLeave}
             >
               <button
-                className={`relative text-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-1 ${pathname === "/services" || servicesDropdownOpen
-                    ? "text-teal-600"
-                    : "text-gray-700 hover:text-teal-600"
+                className={`relative text-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-1 ${pathname.startsWith("/services") || servicesDropdownOpen
+                  ? "text-teal-600"
+                  : "text-gray-700 hover:text-teal-600"
                   }`}
               >
                 Services
                 <ChevronDown className={`w-4 h-4 transition-transform ${servicesDropdownOpen ? "rotate-180" : ""}`} />
-                {(pathname === "/services" || servicesDropdownOpen) && (
+                {(pathname.startsWith("/services") || servicesDropdownOpen) && (
                   <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-teal-600 to-cyan-500 rounded-full"></span>
                 )}
               </button>
@@ -96,15 +96,15 @@ export default function Navbar() {
               {/* Dropdown Menu */}
               {servicesDropdownOpen && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
+                  className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50 max-h-[70vh] overflow-y-auto"
                   onMouseEnter={handleServicesMouseEnter}
                   onMouseLeave={handleServicesMouseLeave}
                 >
-                  {services.map((service, index) => (
+                  {allServices.map((service, index) => (
                     <Link
                       key={index}
-                      href={`/services#${service.title.toLowerCase().replace(/\s+/g, "-")}`}
-                      className="block px-4 py-3 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors"
+                      href={`/services/${service.slug}`}
+                      className="block px-4 py-3 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors border-b border-gray-50 last:border-0"
                     >
                       <div className="font-semibold">{service.title}</div>
                       <div className="text-xs text-gray-500 mt-0.5">{service.subtitle}</div>
@@ -122,8 +122,8 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={`relative text-sm font-bold uppercase tracking-wider transition-colors ${isActive
-                      ? "text-teal-600"
-                      : "text-gray-700 hover:text-teal-600"
+                    ? "text-teal-600"
+                    : "text-gray-700 hover:text-teal-600"
                     }`}
                 >
                   {link.label}
@@ -165,7 +165,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
           }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-white border-t border-gray-200">
@@ -175,8 +175,8 @@ export default function Navbar() {
               href="/"
               onClick={() => setIsOpen(false)}
               className={`text-base font-bold uppercase tracking-wider py-2 transition-colors ${pathname === "/"
-                  ? "text-teal-600 border-l-4 border-teal-500 pl-4"
-                  : "text-gray-700 hover:text-teal-600 hover:pl-4 transition-all"
+                ? "text-teal-600 border-l-4 border-teal-500 pl-4"
+                : "text-gray-700 hover:text-teal-600 hover:pl-4 transition-all"
                 }`}
             >
               Home
@@ -186,9 +186,9 @@ export default function Navbar() {
             <div>
               <button
                 onClick={() => setServicesMobileOpen(!servicesMobileOpen)}
-                className={`w-full text-left text-base font-bold uppercase tracking-wider py-2 transition-colors flex items-center justify-between ${pathname === "/services"
-                    ? "text-teal-600 border-l-4 border-teal-500 pl-4"
-                    : "text-gray-700 hover:text-teal-600 pl-4"
+                className={`w-full text-left text-base font-bold uppercase tracking-wider py-2 transition-colors flex items-center justify-between ${pathname.startsWith("/services")
+                  ? "text-teal-600 border-l-4 border-teal-500 pl-4"
+                  : "text-gray-700 hover:text-teal-600 pl-4"
                   }`}
               >
                 Services
@@ -196,10 +196,10 @@ export default function Navbar() {
               </button>
               {servicesMobileOpen && (
                 <div className="ml-4 mt-2 space-y-2 border-l-2 border-gray-200 pl-4">
-                  {services.map((service, index) => (
+                  {allServices.map((service, index) => (
                     <Link
                       key={index}
-                      href={`/services#${service.title.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={`/services/${service.slug}`}
                       onClick={() => {
                         setIsOpen(false);
                         setServicesMobileOpen(false);
@@ -223,14 +223,15 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   className={`text-base font-bold uppercase tracking-wider py-2 transition-colors ${isActive
-                      ? "text-teal-600 border-l-4 border-teal-500 pl-4"
-                      : "text-gray-700 hover:text-teal-600 hover:pl-4 transition-all"
+                    ? "text-teal-600 border-l-4 border-teal-500 pl-4"
+                    : "text-gray-700 hover:text-teal-600 hover:pl-4 transition-all"
                     }`}
                 >
                   {link.label}
                 </Link>
               );
             })}
+
             <div className="pt-4 mt-4 border-t border-gray-200">
               <Button
                 className="w-full bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-700 hover:to-cyan-600 text-white rounded-full py-6 font-bold shadow-lg"
