@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FirstVisitLoader from "@/components/PageLoader";
+import ImageProtection from "@/components/ImageProtection";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ImageProtection />
         <FirstVisitLoader>
           <Navbar />
           {children}
