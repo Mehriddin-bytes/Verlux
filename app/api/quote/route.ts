@@ -10,13 +10,37 @@ interface QuoteRequest {
   budget?: string;
 }
 
+interface FileAttachment {
+  filename: string;
+  content: Buffer;
+}
+
+// File upload limits
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB per file
+const MAX_TOTAL_SIZE = 25 * 1024 * 1024; // 25MB total
+const MAX_FILES = 10;
+const ALLOWED_MIME_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+  'image/svg+xml',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.ms-powerpoint',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+];
+
 // Get recipient email from environment variable, fallback to default
 const getRecipientEmail = () => {
   return process.env.QUOTE_RECIPIENT_EMAIL || process.env.CONTACT_EMAIL || "info@verlux.com";
 };
 
 // Email template
-const createEmailHTML = (body: QuoteRequest) => {
+const createEmailHTML = (body: QuoteRequest, attachmentCount: number = 0) => {
   const formatBudget = (budget?: string) => {
     if (!budget) return "Not specified";
     const budgetMap: Record<string, string> = {
@@ -93,6 +117,12 @@ const createEmailHTML = (body: QuoteRequest) => {
                 <td style="padding: 8px 0; font-weight: bold;">Budget:</td>
                 <td style="padding: 8px 0;">${formatBudget(body.budget)}</td>
               </tr>
+              ${attachmentCount > 0 ? `
+              <tr>
+                <td style="padding: 8px 0; font-weight: bold;">Attachments:</td>
+                <td style="padding: 8px 0;">${attachmentCount} file${attachmentCount !== 1 ? 's' : ''} attached</td>
+              </tr>
+              ` : ''}
             </table>
           </div>
 
@@ -120,7 +150,7 @@ const createEmailHTML = (body: QuoteRequest) => {
   `;
 };
 
-const createEmailText = (body: QuoteRequest) => {
+const createEmailText = (body: QuoteRequest, attachmentCount: number = 0) => {
   return `
 New Quote Request - Verlux Construction
 
@@ -134,9 +164,10 @@ Project Details:
 - Description: ${body.projectDetails}
 - Timeline: ${body.timeline || "Not specified"}
 - Budget: ${body.budget || "Not specified"}
+${attachmentCount > 0 ? `- Attachments: ${attachmentCount} file${attachmentCount !== 1 ? 's' : ''} attached` : ''}
 
-Submitted: ${new Date().toLocaleString('en-US', { 
-  dateStyle: 'long', 
+Submitted: ${new Date().toLocaleString('en-US', {
+  dateStyle: 'long',
   timeStyle: 'short',
   timeZone: 'America/Toronto'
 })}
@@ -145,7 +176,22 @@ Submitted: ${new Date().toLocaleString('en-US', {
 
 export async function POST(request: NextRequest) {
   try {
-    const body: QuoteRequest = await request.json();
+    const formData = await request.formData();
+
+    // Extract form fields
+    const body: QuoteRequest = {
+      name: formData.get('name') as string || '',
+      email: formData.get('email') as string || '',
+      phone: formData.get('phone') as string || '',
+      projectType: formData.get('projectType') as string || '',
+      projectDetails: formData.get('projectDetails') as string || '',
+      timeline: formData.get('timeline') as string || undefined,
+      budget: formData.get('budget') as string || undefined,
+    };
+
+    // Extract files
+    const files = formData.getAll('files') as File[];
+    const attachments: FileAttachment[] = [];
 
     // Validate required fields
     if (!body.name || !body.email || !body.phone || !body.projectType || !body.projectDetails) {
@@ -164,6 +210,51 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate and process files
+    if (files.length > 0) {
+      if (files.length > MAX_FILES) {
+        return NextResponse.json(
+          { error: `Maximum ${MAX_FILES} files allowed` },
+          { status: 400 }
+        );
+      }
+
+      let totalSize = 0;
+      for (const file of files) {
+        if (file.size > MAX_FILE_SIZE) {
+          return NextResponse.json(
+            { error: `File "${file.name}" exceeds 10MB limit` },
+            { status: 400 }
+          );
+        }
+
+        if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+          return NextResponse.json(
+            { error: `File type not allowed: ${file.name}` },
+            { status: 400 }
+          );
+        }
+
+        totalSize += file.size;
+      }
+
+      if (totalSize > MAX_TOTAL_SIZE) {
+        return NextResponse.json(
+          { error: "Total file size exceeds 25MB limit" },
+          { status: 400 }
+        );
+      }
+
+      // Convert files to attachments
+      for (const file of files) {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        attachments.push({
+          filename: file.name,
+          content: buffer,
+        });
+      }
+    }
+
     // Get recipient email from environment variable
     const recipientEmail = getRecipientEmail();
 
@@ -179,12 +270,13 @@ export async function POST(request: NextRequest) {
           to: recipientEmail,
           replyTo: body.email,
           subject: `New Quote Request: ${body.projectType} - ${body.name}`,
-          html: createEmailHTML(body),
-          text: createEmailText(body),
+          html: createEmailHTML(body, attachments.length),
+          text: createEmailText(body, attachments.length),
+          attachments: attachments.length > 0 ? attachments : undefined,
         });
 
         emailSent = true;
-        console.log(`Email sent successfully to ${recipientEmail}`);
+        console.log(`Email sent successfully to ${recipientEmail} with ${attachments.length} attachment(s)`);
       } catch (emailError) {
         console.error("Error sending email via Resend:", emailError);
         // Fall through to alternative method
@@ -195,16 +287,17 @@ export async function POST(request: NextRequest) {
     if (!emailSent) {
       // Log the quote request for manual processing
       console.log("Quote request received (email not sent - configure RESEND_API_KEY):", {
-      name: body.name,
-      email: body.email,
-      phone: body.phone,
-      projectType: body.projectType,
-      projectDetails: body.projectDetails,
-      timeline: body.timeline || "Not specified",
-      budget: body.budget || "Not specified",
-      timestamp: new Date().toISOString(),
+        name: body.name,
+        email: body.email,
+        phone: body.phone,
+        projectType: body.projectType,
+        projectDetails: body.projectDetails,
+        timeline: body.timeline || "Not specified",
+        budget: body.budget || "Not specified",
+        attachments: attachments.length,
+        timestamp: new Date().toISOString(),
         recipientEmail,
-    });
+      });
     }
 
     return NextResponse.json(

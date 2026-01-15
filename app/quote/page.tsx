@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, FormEvent, ChangeEvent } from "react";
+import { useState, useCallback, useRef, FormEvent, ChangeEvent, DragEvent } from "react";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
@@ -12,9 +12,15 @@ import {
   AlertCircle,
   Sparkles,
   Clock,
-  Shield,
   Award,
   Zap,
+  Upload,
+  X,
+  FileText,
+  Image,
+  FileSpreadsheet,
+  Presentation,
+  File,
 } from "lucide-react";
 
 // Types
@@ -34,7 +40,52 @@ interface FormErrors {
   phone?: string;
   projectType?: string;
   projectDetails?: string;
+  files?: string;
 }
+
+// File upload constants
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB per file
+const MAX_TOTAL_SIZE = 25 * 1024 * 1024; // 25MB total
+const MAX_FILES = 10;
+const ALLOWED_FILE_TYPES = [
+  // Images
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+  'image/svg+xml',
+  // Documents
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  // Spreadsheets
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  // Presentations
+  'application/vnd.ms-powerpoint',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+];
+
+const ALLOWED_EXTENSIONS = [
+  '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx',
+  '.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'
+];
+
+const getFileIcon = (file: File) => {
+  const type = file.type;
+  if (type.startsWith('image/')) return Image;
+  if (type.includes('pdf')) return FileText;
+  if (type.includes('word') || type.includes('document')) return FileText;
+  if (type.includes('excel') || type.includes('spreadsheet')) return FileSpreadsheet;
+  if (type.includes('powerpoint') || type.includes('presentation')) return Presentation;
+  return File;
+};
+
+const formatFileSize = (bytes: number): string => {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+};
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
@@ -120,6 +171,9 @@ function QuoteContent() {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [files, setFiles] = useState<File[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Handle field changes with validation
   const handleChange = useCallback(
@@ -146,6 +200,87 @@ function QuoteContent() {
     setTouched((prev) => ({ ...prev, [fieldName]: true }));
     const error = validateField(fieldName, value);
     setErrors((prev) => ({ ...error ? { ...prev, [fieldName]: error } : { ...prev, [fieldName]: undefined } }));
+  }, []);
+
+  // File validation
+  const validateFiles = useCallback((newFiles: File[]): string | undefined => {
+    const totalFiles = files.length + newFiles.length;
+    if (totalFiles > MAX_FILES) {
+      return `Maximum ${MAX_FILES} files allowed`;
+    }
+
+    const totalSize = [...files, ...newFiles].reduce((sum, f) => sum + f.size, 0);
+    if (totalSize > MAX_TOTAL_SIZE) {
+      return `Total file size cannot exceed ${formatFileSize(MAX_TOTAL_SIZE)}`;
+    }
+
+    for (const file of newFiles) {
+      if (file.size > MAX_FILE_SIZE) {
+        return `File "${file.name}" exceeds ${formatFileSize(MAX_FILE_SIZE)} limit`;
+      }
+      if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+        const ext = '.' + file.name.split('.').pop()?.toLowerCase();
+        if (!ALLOWED_EXTENSIONS.includes(ext)) {
+          return `File type not allowed: ${file.name}`;
+        }
+      }
+    }
+    return undefined;
+  }, [files]);
+
+  // Handle file selection
+  const handleFileSelect = useCallback((selectedFiles: FileList | null) => {
+    if (!selectedFiles || selectedFiles.length === 0) return;
+
+    const newFiles = Array.from(selectedFiles);
+    const error = validateFiles(newFiles);
+
+    if (error) {
+      setErrors((prev) => ({ ...prev, files: error }));
+      return;
+    }
+
+    setFiles((prev) => [...prev, ...newFiles]);
+    setErrors((prev) => ({ ...prev, files: undefined }));
+  }, [validateFiles]);
+
+  // Handle file input change
+  const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    handleFileSelect(e.target.files);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }, [handleFileSelect]);
+
+  // Handle drag events
+  const handleDragEnter = useCallback((e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  }, []);
+
+  const handleDragOver = useCallback((e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleDrop = useCallback((e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    handleFileSelect(e.dataTransfer.files);
+  }, [handleFileSelect]);
+
+  // Remove file
+  const removeFile = useCallback((index: number) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+    setErrors((prev) => ({ ...prev, files: undefined }));
   }, []);
 
   // Validate entire form
@@ -194,12 +329,17 @@ function QuoteContent() {
       setStatus("submitting");
 
       try {
+        const submitData = new FormData();
+        Object.entries(formData).forEach(([key, value]) => {
+          submitData.append(key, value);
+        });
+        files.forEach((file) => {
+          submitData.append('files', file);
+        });
+
         const response = await fetch("/api/quote", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
+          body: submitData,
         });
 
         if (!response.ok) {
@@ -218,6 +358,7 @@ function QuoteContent() {
             timeline: "",
             budget: "",
           });
+          setFiles([]);
           setErrors({});
           setTouched({});
           setStatus("idle");
@@ -543,6 +684,86 @@ function QuoteContent() {
                           </p>
                         ) : (
                           <p className="mt-1 text-xs text-gray-400">Minimum 10 characters</p>
+                        )}
+                      </div>
+
+                      {/* File Upload */}
+                      <div className="sm:col-span-2">
+                        <label className="block text-xs font-bold text-gray-900 mb-1.5">
+                          Attachments <span className="text-gray-400">(optional)</span>
+                        </label>
+                        <div
+                          onDragEnter={handleDragEnter}
+                          onDragOver={handleDragOver}
+                          onDragLeave={handleDragLeave}
+                          onDrop={handleDrop}
+                          onClick={() => fileInputRef.current?.click()}
+                          className={`relative border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-all ${
+                            isDragging
+                              ? "border-gray-700 bg-gray-50"
+                              : errors.files
+                              ? "border-red-300 bg-red-50/50"
+                              : "border-gray-200 bg-gray-50/50 hover:border-gray-400 hover:bg-gray-100/50"
+                          } ${isSubmitting ? "pointer-events-none opacity-50" : ""}`}
+                        >
+                          <input
+                            ref={fileInputRef}
+                            type="file"
+                            multiple
+                            accept={ALLOWED_EXTENSIONS.join(',')}
+                            onChange={handleFileChange}
+                            className="hidden"
+                            disabled={isSubmitting}
+                          />
+                          <Upload className={`w-8 h-8 mx-auto mb-2 ${isDragging ? "text-gray-700" : "text-gray-400"}`} />
+                          <p className="text-sm text-gray-600 font-medium">
+                            {isDragging ? "Drop files here" : "Drag & drop files or click to browse"}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-1">
+                            PDF, Word, Excel, PowerPoint, Images (max {formatFileSize(MAX_FILE_SIZE)} each, {MAX_FILES} files)
+                          </p>
+                        </div>
+
+                        {errors.files && (
+                          <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" aria-hidden="true" />
+                            {errors.files}
+                          </p>
+                        )}
+
+                        {/* File List */}
+                        {files.length > 0 && (
+                          <div className="mt-3 space-y-2">
+                            {files.map((file, index) => {
+                              const FileIcon = getFileIcon(file);
+                              return (
+                                <div
+                                  key={`${file.name}-${index}`}
+                                  className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg border border-gray-200"
+                                >
+                                  <FileIcon className="w-5 h-5 text-gray-500 shrink-0" />
+                                  <div className="flex-1 min-w-0">
+                                    <p className="text-sm text-gray-700 font-medium truncate">{file.name}</p>
+                                    <p className="text-xs text-gray-400">{formatFileSize(file.size)}</p>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      removeFile(index);
+                                    }}
+                                    className="p-1 hover:bg-gray-200 rounded transition-colors"
+                                    disabled={isSubmitting}
+                                  >
+                                    <X className="w-4 h-4 text-gray-500" />
+                                  </button>
+                                </div>
+                              );
+                            })}
+                            <p className="text-xs text-gray-400">
+                              {files.length} file{files.length !== 1 ? 's' : ''} selected ({formatFileSize(files.reduce((sum, f) => sum + f.size, 0))})
+                            </p>
+                          </div>
                         )}
                       </div>
 
