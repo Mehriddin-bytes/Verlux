@@ -41,7 +41,7 @@ export const companyStory = {
 export const stats: Stat[] = [
     {
         label: "Years of Experience",
-        value: "18+",
+        value: "6+",
         icon: Clock,
         description: "Delivering excellence since 2020"
     },
