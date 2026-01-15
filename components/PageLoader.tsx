@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { Hammer, Wrench, HardHat } from "lucide-react";
+import { Construction, Hammer, Wrench, HardHat } from "lucide-react";
 
 interface FirstVisitLoaderProps {
   children: React.ReactNode;
@@ -133,17 +132,19 @@ export default function FirstVisitLoader({ children, minimumDelay = 800 }: First
     return (
       <div className="min-h-screen bg-white flex items-center justify-center fixed inset-0 z-50">
         <div className="text-center">
-          {/* Logo */}
+          {/* Animated Construction Icon */}
           <div className="relative mb-8">
-            <div className="bg-brand px-6 py-4 shadow-xl animate-pulse">
-              <Image
-                src="/verlux-logo.png"
-                alt="Verlux Logo"
-                width={180}
-                height={60}
-                className="h-12 w-auto"
-                priority
-              />
+            <div className="w-24 h-24 mx-auto relative">
+              {/* Rotating Construction Icon */}
+              <div className="absolute inset-0 animate-spin">
+                <Construction className="w-24 h-24 text-gray-600 opacity-20" />
+              </div>
+              {/* Pulsing Center Icon */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 bg-gray-600 rounded-full flex items-center justify-center shadow-xl animate-pulse">
+                  <HardHat className="w-8 h-8 text-white" />
+                </div>
+              </div>
             </div>
           </div>
 

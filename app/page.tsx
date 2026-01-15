@@ -42,7 +42,7 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-24">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 mb-8">
-              <span className="text-sm font-bold tracking-wide text-white uppercase">Since 2018 • Ontario&apos;s Trusted Contractor</span>
+              <span className="text-sm font-bold tracking-wide text-white uppercase">Since 2020 • Ontario&apos;s Trusted Contractor</span>
             </div>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 leading-tight text-white">
               Quality Comes First
@@ -149,7 +149,7 @@ export default function Home() {
             <div>
               <div className="text-sm uppercase tracking-[0.2em] text-brand font-bold mb-4">About Verlux</div>
               <h2 className="text-4xl sm:text-5xl font-black mb-6 leading-tight text-gray-900">
-                Building Excellence Since 2018
+                Building Excellence Since 2020
               </h2>
               <p className="text-lg text-gray-600 leading-relaxed mb-6">
                 Our team of qualified and experienced professionals can be trusted with all your Commercial, Industrial, and Residential projects. When you choose Verlux, you are getting experienced, qualified, and innovative expertise.
@@ -233,7 +233,7 @@ export default function Home() {
                 What Makes Us Different
               </h2>
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                Since 2018, Verlux has been committed to doing things differently. We&apos;ve identified the common challenges in the construction industry and built our company around solving them.
+                Since 2020, Verlux has been committed to doing things differently. We&apos;ve identified the common challenges in the construction industry and built our company around solving them.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">

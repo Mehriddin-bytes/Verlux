@@ -273,10 +273,10 @@ function QuoteContent() {
             
             {/* Trust Indicators */}
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <Shield className="w-5 h-5 text-gray-400" />
                 <span className="text-gray-200">Licensed & Insured</span>
-              </div>
+              </div> */}
               <div className="flex items-center gap-2">
                 <Award className="w-5 h-5 text-gray-400" />
                 <span className="text-gray-200">Award Winning</span>
@@ -329,14 +329,14 @@ function QuoteContent() {
                     <CheckCircle className="w-4 h-4 text-brand" />
                     Why Choose Us?
                   </h3>
-                  <ul className="space-y-2 text-xs text-brand" role="list">
+                  {/* <ul className="space-y-2 text-xs text-brand" role="list">
                     {["Licensed & Insured", "Award-Winning", "24/7 Support", "Competitive Pricing"].map((item) => (
                       <li key={item} className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-gray-700 shrink-0"></div>
                         {item}
                       </li>
                     ))}
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
             </aside>
@@ -611,13 +611,13 @@ function QuoteContent() {
                           </>
                         )}
                       </Button>
-                      <p className="mt-3 text-xs text-gray-500 text-center">
+                      {/* <p className="mt-3 text-xs text-gray-500 text-center">
                         By submitting, you agree to our{" "}
                         <a href="/privacy" className="text-brand hover:text-gray-700 font-semibold underline">
                           privacy policy
                         </a>
                         .
-                      </p>
+                      </p> */}
                     </div>
                   </form>
                 )}

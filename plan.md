@@ -24,7 +24,7 @@
   - "View All Projects" button
 
 - **Why Choose Us**
-  - Key differentiators (Licensed, Insured, Quality Materials, etc.)
+  - Key differentiators (// Licensed, // Insured, Quality Materials, etc.)
   - Icons with brief descriptions
 
 - **Testimonials**

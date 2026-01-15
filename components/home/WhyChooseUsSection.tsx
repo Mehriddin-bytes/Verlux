@@ -6,13 +6,13 @@ import ScrollAnimation from "@/components/ui/scroll-animation";
 import StaggerAnimation from "@/components/ui/stagger-animation";
 
 const features = [
-  {
-    icon: Shield,
-    title: "Licensed & Insured",
-    description: "Fully licensed and insured for your peace of mind. We carry comprehensive coverage to protect your investment.",
-    image: "/assests/exterior-wall-brick-patterning-scaffolding.JPG",
-    gradient: "from-blue-500 to-gray-500",
-  },
+  // {
+  //   icon: Shield,
+  //   title: "Licensed & Insured",
+  //   description: "Fully licensed and insured for your peace of mind. We carry comprehensive coverage to protect your investment.",
+  //   image: "/assests/exterior-wall-brick-patterning-scaffolding.JPG",
+  //   gradient: "from-blue-500 to-gray-500",
+  // },
   {
     icon: Award,
     title: "Award-Winning Quality",

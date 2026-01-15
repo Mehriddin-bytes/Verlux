@@ -1,6 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Construction, Phone, Mail, MapPin } from "lucide-react";
 import { services as servicesData } from "@/lib/data/homeData";
 
 const quickLinks = [
@@ -25,16 +24,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Company Info - Centered */}
           <div className="text-center md:text-left">
-            <Link href="/" className="inline-flex items-center mb-6 group">
-              <div className="h-14 bg-brand px-4 py-2 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
-                <Image
-                  src="/verlux-logo.png"
-                  alt="Verlux Logo"
-                  width={140}
-                  height={48}
-                  className="h-10 w-auto"
-                />
+            <Link href="/" className="inline-flex items-center gap-3 mb-6 group">
+              <div className="w-12 h-12 rounded-lg bg-brand flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Construction className="w-7 h-7 text-white" />
               </div>
+              <span className="text-2xl font-black text-gray-900 group-hover:text-brand transition-colors">
+                VERLUX
+              </span>
             </Link>
             <p className="text-gray-600 mb-6 leading-relaxed">
               Building exceptional spaces with precision, passion, and unparalleled expertise. Your trusted construction partner for over 15 years.

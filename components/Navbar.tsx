@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
-import { Menu, X, ArrowRight, ChevronDown, Phone } from "lucide-react";
+import { Menu, X, ArrowRight, ChevronDown, Phone, Construction } from "lucide-react";
 import { services } from "@/lib/data/homeData";
 
 const navLinks = [
@@ -48,17 +47,13 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center group">
-            <div className="h-12 bg-brand px-3 py-1 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
-              <Image
-                src="/verlux-logo.png"
-                alt="Verlux Logo"
-                width={120}
-                height={40}
-                className="h-10 w-auto"
-                priority
-              />
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 bg-brand flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <Construction className="w-6 h-6 text-white" />
             </div>
+            <span className="text-2xl font-black text-gray-900 group-hover:text-brand transition-colors">
+              VERLUX
+            </span>
           </Link>
 
           {/* Desktop Navigation - Centered */}
