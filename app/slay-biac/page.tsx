@@ -15,7 +15,7 @@ export default function SlayBiac() {
           </h1>
 
           <p className="text-red-400 text-lg font-bold mb-6 uppercase tracking-wider">
-            Nice try, hacker.
+            Nice try, DIDDY.
           </p>
 
           <div className="bg-black/50 p-6 mb-8 border border-red-500/30">
