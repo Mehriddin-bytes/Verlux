@@ -172,7 +172,7 @@ export const services: Service[] = [
   {
     icon: "Paintbrush",
     title: "Architectural Coating",
-    subtitle: "/ Painting",
+    subtitle: "Painting",
     fullTitle: "Architectural Coating / Painting",
     slug: "architectural-coating-painting",
     description: "Expert architectural coating and painting services to enhance and protect your building's exterior",
