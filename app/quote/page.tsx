@@ -383,7 +383,7 @@ function QuoteContent() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-brand text-white pt-32 pb-20">
+      <section className="relative overflow-hidden bg-brand text-white pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-20">
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] [background-size:24px_24px]"></div>
@@ -391,39 +391,35 @@ function QuoteContent() {
 
         {/* Floating Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 right-10 w-72 h-72 bg-gray-500/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-10 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-10 w-48 sm:w-72 h-48 sm:h-72 bg-gray-500/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-10 w-64 sm:w-96 h-64 sm:h-96 bg-gray-500/20 rounded-full blur-3xl"></div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8 shadow-lg">
-              <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-bold tracking-wide">Free Quote • No Obligation • 24hr Response</span>
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-4 sm:mb-8 shadow-lg">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm font-bold tracking-wide">Free Quote • No Obligation • 24hr Response</span>
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 leading-tight">
               Get Your Custom
               <br />
               <span className="text-gray-200">
                 Construction Quote
               </span>
             </h1>
-            <p className="text-xl sm:text-2xl text-gray-50/90 max-w-2xl mx-auto leading-relaxed mb-8">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-50/90 max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-8 px-2">
               Tell us about your project and receive a detailed, personalized quote within 24 hours. Our experts are ready to bring your vision to life.
             </p>
-            
+
             {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-              {/* <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-gray-400" />
-                <span className="text-gray-200">Licensed & Insured</span>
-              </div> */}
-              <div className="flex items-center gap-2">
-                <Award className="w-5 h-5 text-gray-400" />
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <Award className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
                 <span className="text-gray-200">Award Winning</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Zap className="w-5 h-5 text-gray-400" />
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
                 <span className="text-gray-200">Fast Response</span>
               </div>
             </div>
@@ -432,59 +428,51 @@ function QuoteContent() {
       </section>
 
       {/* Form Section - Compact Layout */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10 pb-12" aria-label="Quote request form">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-4 sm:-mt-8 relative z-10 pb-8 sm:pb-12" aria-label="Quote request form">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-10 gap-6">
+          <div className="grid lg:grid-cols-10 gap-4 sm:gap-6">
             {/* Contact Info Sidebar - Compact */}
             <aside className="lg:col-span-3 order-2 lg:order-1">
-              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 lg:sticky lg:top-20 space-y-4">
-                <h2 className="text-xl font-black text-gray-900 mb-2">Contact Us</h2>
-                <div className="space-y-3">
+              <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-6 lg:sticky lg:top-20 space-y-3 sm:space-y-4">
+                <h2 className="text-lg sm:text-xl font-black text-gray-900 mb-2">Contact Us</h2>
+                <div className="space-y-2 sm:space-y-3">
                   <a
                     href="tel:+14374520850"
-                    className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 border border-gray-200 hover:border-teal-300 hover:bg-gray-200 transition-all"
+                    className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg sm:rounded-xl bg-gray-50 border border-gray-200 hover:border-teal-300 hover:bg-gray-200 transition-all"
                   >
-                    <Phone className="w-5 h-5 text-brand shrink-0" />
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-brand shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-brand truncate">+1 (437) 452-0850</p>
+                      <p className="text-xs sm:text-sm font-semibold text-brand truncate">+1 (437) 452-0850</p>
                     </div>
                   </a>
                   <a
                     href="mailto:info@verlux.com"
-                    className="flex items-center gap-3 p-3 rounded-xl bg-cyan-50 border border-cyan-100 hover:border-cyan-300 hover:bg-cyan-100 transition-all"
+                    className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg sm:rounded-xl bg-cyan-50 border border-cyan-100 hover:border-cyan-300 hover:bg-cyan-100 transition-all"
                   >
-                    <Mail className="w-5 h-5 text-cyan-600 shrink-0" />
+                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-600 shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-cyan-600 truncate">info@verlux.com</p>
+                      <p className="text-xs sm:text-sm font-semibold text-cyan-600 truncate">info@verlux.com</p>
                     </div>
                   </a>
-                  <div className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100">
-                    <MapPin className="w-5 h-5 text-brand shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg sm:rounded-xl bg-gray-50 border border-gray-100">
+                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-brand shrink-0 mt-0.5" />
                     <address className="text-xs text-brand not-italic leading-relaxed">
                       8 McKee Ave, North York, ON M2N 7E5
                     </address>
                   </div>
                 </div>
-                <div className="pt-4 border-t border-gray-100">
-                  <h3 className="font-bold text-gray-900 mb-3 text-sm flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-brand" />
+                <div className="pt-3 sm:pt-4 border-t border-gray-100">
+                  <h3 className="font-bold text-gray-900 mb-2 sm:mb-3 text-xs sm:text-sm flex items-center gap-2">
+                    <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-brand" />
                     Why Choose Us?
                   </h3>
-                  {/* <ul className="space-y-2 text-xs text-brand" role="list">
-                    {["Licensed & Insured", "Award-Winning", "24/7 Support", "Competitive Pricing"].map((item) => (
-                      <li key={item} className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-gray-700 shrink-0"></div>
-                        {item}
-                      </li>
-                    ))}
-                  </ul> */}
                 </div>
               </div>
             </aside>
 
             {/* Form - Compact */}
             <div className="lg:col-span-7 order-1 lg:order-2">
-              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8">
+              <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-6 lg:p-8">
                 {isSuccess ? (
                   <div className="text-center py-12 animate-in fade-in duration-500">
                     <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-brand flex items-center justify-center shadow-xl shadow-gray-700/40">

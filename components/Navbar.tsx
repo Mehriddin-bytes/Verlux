@@ -45,13 +45,13 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-brand flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-              <Construction className="w-6 h-6 text-white" />
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-brand flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <Construction className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <span className="text-2xl font-black text-gray-900 group-hover:text-brand transition-colors">
+            <span className="text-xl sm:text-2xl font-black text-gray-900 group-hover:text-brand transition-colors">
               VERLUX
             </span>
           </Link>
@@ -170,7 +170,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        className={`lg:hidden overflow-y-auto transition-all duration-300 ease-in-out ${isOpen ? "max-h-[calc(100vh-4rem)] opacity-100" : "max-h-0 opacity-0"
           }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 bg-white border-t border-gray-200">
