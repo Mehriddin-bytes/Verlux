@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Phone, Mail, MapPin, Shield } from "lucide-react";
 import { services, stats } from "@/lib/data/homeData";
+import HomeQuoteForm from "@/components/home/HomeQuoteForm";
 
 const pillars = [
   { title: "Clear Communication", description: "Transparent updates throughout your project" },
@@ -403,55 +404,7 @@ export default function Home() {
               <h3 className="text-2xl font-bold mb-6 text-gray-900">
                 Request a Free Quote
               </h3>
-              <form action="/api/quote" method="POST" className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Your Name"
-                    required
-                    className="w-full px-4 py-4 border-2 border-gray-200 focus:border-brand focus:outline-none transition-colors bg-white"
-                  />
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone Number"
-                    className="w-full px-4 py-4 border-2 border-gray-200 focus:border-brand focus:outline-none transition-colors bg-white"
-                  />
-                </div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  required
-                  className="w-full px-4 py-4 border-2 border-gray-200 focus:border-brand focus:outline-none transition-colors bg-white"
-                />
-                <select
-                  name="service"
-                  required
-                  className="w-full px-4 py-4 border-2 border-gray-200 focus:border-brand focus:outline-none transition-colors bg-white"
-                >
-                  <option value="">Select a Service</option>
-                  {services.map((service, index) => (
-                    <option key={index} value={service.slug}>{service.fullTitle}</option>
-                  ))}
-                  <option value="other">Other</option>
-                </select>
-                <textarea
-                  name="message"
-                  placeholder="Tell us about your project..."
-                  rows={4}
-                  required
-                  className="w-full px-4 py-4 border-2 border-gray-200 focus:border-brand focus:outline-none transition-colors bg-white resize-none"
-                ></textarea>
-                <button
-                  type="submit"
-                  className="w-full bg-brand hover:bg-brand-hover text-white px-8 py-4 font-semibold transition-all duration-200 flex items-center justify-center gap-2"
-                >
-                  Submit Request
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </form>
+              <HomeQuoteForm />
             </div>
           </div>
         </div>
