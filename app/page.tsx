@@ -20,21 +20,19 @@ export default function Home() {
       {/* Hero Section - Full viewport with video */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Video Background */}
-        <div className="absolute inset-0 z-0 w-full h-full overflow-hidden bg-gray-900 cloudinary-video-container">
-          <iframe
-            src="https://player.cloudinary.com/embed/?cloud_name=abdulgafar4&public_id=overview_igxyad&profile=cld-looping&autoplay=true&muted=true&loop=true&controls=false"
+        <div className="absolute inset-0 z-0 w-full h-full overflow-hidden bg-gray-900">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto object-cover pointer-events-none"
             style={{
-              width: '100vw',
-              height: '56.25vw',
-              minHeight: '100vh',
-              minWidth: '177.77777778vh',
               zIndex: 0,
-              border: 'none',
             }}
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-          />
+          >
+            <source src="/background/background.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70 pointer-events-none" style={{ zIndex: 1 }}></div>
         </div>
 
