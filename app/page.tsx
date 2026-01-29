@@ -349,9 +349,9 @@ export default function Home() {
       </section>
 
       {/* Contact CTA Section */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-9 sm:py-11 lg:py-12 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
             {/* Contact Info */}
             <div>
               <div className="text-xs sm:text-sm uppercase tracking-[0.2em] text-brand font-bold mb-2 sm:mb-4">Get In Touch</div>
