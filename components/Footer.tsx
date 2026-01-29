@@ -23,7 +23,7 @@ export default function Footer() {
       <div className="container mx-auto px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Logo */}
-          <div className="flex flex-col items-center sm:items-start">
+          <div className="flex flex-col items-center justify-center lg:pr-20">
             <Link href="/" className="inline-flex flex-col items-center text-center">
               <div className="w-32 h-32 rounded-2xl bg-brand flex items-center justify-center mb-4">
                 <Construction className="w-20 h-20 text-white" />
