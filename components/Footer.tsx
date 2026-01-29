@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div>
+          <div className="text-center sm:text-left">
             <h3 className="text-gray-900 font-semibold mb-5 uppercase tracking-wide border-b border-gray-300 pb-2">Services</h3>
             <ul className="space-y-2.5">
               {services.slice(0, 5).map((service) => (
@@ -48,7 +48,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="text-center sm:text-left">
             <h3 className="text-gray-900 font-semibold mb-5 uppercase tracking-wide border-b border-gray-300 pb-2">About</h3>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
@@ -62,18 +62,18 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="text-center sm:text-left">
             <h3 className="text-gray-900 font-semibold mb-5 uppercase tracking-wide border-b border-gray-300 pb-2">Contact Us</h3>
             <div className="space-y-4">
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 justify-center sm:justify-start">
                 <MapPin className="w-4 h-4 text-brand mt-0.5 flex-shrink-0" />
                 <span className="text-gray-600 text-sm">8 McKee Ave,<br />North York, ON M2N 7E5</span>
               </div>
-              <a href="mailto:info@verlux.com" className="flex items-center gap-3 text-gray-600 hover:text-brand transition-colors text-sm">
+              <a href="mailto:info@verlux.com" className="flex items-center gap-3 justify-center sm:justify-start text-gray-600 hover:text-brand transition-colors text-sm">
                 <Mail className="w-4 h-4 text-brand flex-shrink-0" />
                 <span>info@verlux.com</span>
               </a>
-              <a href="tel:+14374520850" className="flex items-center gap-3 text-gray-600 hover:text-brand transition-colors text-sm">
+              <a href="tel:+14374520850" className="flex items-center gap-3 justify-center sm:justify-start text-gray-600 hover:text-brand transition-colors text-sm">
                 <Phone className="w-4 h-4 text-brand flex-shrink-0" />
                 <span>+1 (437) 452-0850</span>
               </a>
